@@ -68,9 +68,22 @@ $ curl -O https://ubuntu-fr.org/telechargement\?action\=dl
 * dig :
 ```
 $ dig ynov.com
-
+;; ANSWER SECTION:
+ynov.com.		4544	IN	A	217.70.184.38
 
 $ dig google.com
-
+;; ANSWER SECTION:
+google.com.		3600	IN	A	216.58.209.238
+```
+---
+### II. Notion de ports et SSH.
+#### 1. Exploration des ports locaux
 
 ```
+$ ss -p
+u_str ESTAB      0      0      /run/dbus/system_bus_socket 22286                 * 22285                 users:(("dbus-daemon",pid=2596,fd=19))
+```
+#### 2.  SSH
+Pour me connecter à la VM grâce à son IP avec SSH, j'entre la commande :
+`$ ssh root 192.168.127.10`
+
