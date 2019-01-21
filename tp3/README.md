@@ -3,6 +3,8 @@
 
 *Projet réalisé sous Fedora 29*
 
+---
+
 ### I. Création et utilisation simples d'une VM CentOS
 
 La création de la VM, ainsi que l'installation de l'OS et le premier boot a été fait en classe tous ensemble.
