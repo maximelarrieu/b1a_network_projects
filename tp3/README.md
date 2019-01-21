@@ -51,10 +51,6 @@ PING 10.33.3.26 (10.33.3.26) 58(84) bytes of data.
 64 bytes from par21s07-in-f14.1e100.net (216.58.205.14): icmp_seq=2 ttl=54 time=16.4 ms
 ```
 * table de routage :
-```
-
-```
-ou `$ ip route` (comme sur la VM)
 
 (hôte)
 ```
@@ -117,15 +113,39 @@ Pour me connecter à la VM grâce à son IP en SSH, j'entre la commande :
 
 #### 3. Firewall
 ##### 1. SSH
-
-
+Tout d'abord je modifie le fichier sshd_config, pour se faire :
+```$ sudo emacs -nw /etc/ssh/sshd_config```
+Je modifie la ligne "Port" pour en entrer un nouveau
+```Port 5454```
+Le port n'est pas ouvert avec les commandes Firewall, voir le point suivant.
 ##### 2.  netcat
+Pour que le serveur écoute sur le port 5454 en tcp, j'entre :
+```$ firewall-cmd --add-port=5454/tcp --permanent```
+
+Le port est désormais autorisé dans le firewall donc on peut actualiser :
+```$ firewall-cmd --reload```
+
+Et on lance un serveur netcat sur la VM :
+```
+[root@localhost ~]# nc -l -p 5454
+bonjour
+je
+test
+```
+Et on se connecte au serveur netcat avec le pc hôte :
+```
+$ nc 192.168.127.10 5454
+bonjour
+je
+test
+```
 
 ---
 
 ### III. Routage statique
 #### 1. Préparation des hôtes
 
+*Préparation avec câbles*
 ```
 $ ping `192.168.112.1
 PING 192.168.112.1 (192.168.112.1) 56(84) bytes of data.
@@ -133,3 +153,17 @@ PING 192.168.112.1 (192.168.112.1) 56(84) bytes of data.
 64 bytes from 192.168.112.1: icmp_seq=2 ttl=64 time=0.443 ms
 ...
 ```
+
+*Préparation VirtualBox*
+...
+
+*Check*
+...
+
+*Activation du routage sur les PCs*
+
+Pour utiliser mon PC comme routeur j'utilise la commande : ```sysctl -w net.ipv4.conf.all.forwarding=1```
+
+#### 2. Configuration du routage
+
+#### 3. Configuration des noms de domaine
