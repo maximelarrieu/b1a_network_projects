@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-# PROJET RESEAU - TP3
-## PLUSIEURS RESEAUX : ROUTAGE STATIQUE
----
-
-### 1. Création et utilisation simples d'une VM CentOS
-
-
-=======
 # PROJET RESEAU - TP3
 ## PLUSIEURS RESEAUX : ROUTAGE STATIQUE
 
@@ -269,4 +260,3 @@ PING 192.168.101.1 (192.168.101.1) 56(84) bytes of data.
 ...
 ```
 #### 3. Configuration des noms de domaine
->>>>>>> c3889430763b3be1bc61b7c92fe43d23e6e514d3
