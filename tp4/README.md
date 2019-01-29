@@ -46,7 +46,8 @@ $ ip s r
 ```
 
 > Test
-Client ping Server
+
+> Client ping Server
 ```
 $ ping 10.2.0.10
 PING 10.2.0.10 (10.2.0.10) 56(84) bytes of data.
@@ -64,3 +65,79 @@ PING 10.1.0.10 (10.1.0.10) 56(84) bytes of data.
 ```
 
 ### 2. Spéléologie réseau
+#### 1. ARP
+##### A. Manip 1
+1. Pour vider la table ARP de mes machines, j'utilise la commande : `$ sudo ip neigh flush all`
+2. J'affiche ma table ARP sur Client :
+```
+$ ip neigh show
+10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 DELAY
+```
+...
+
+3. J'affiche ma table ARP sur Serveur :
+```
+$ ip neigh show
+10.2.0.1 dev enp0s3 lladdr 0a:00:27:00:00:02 DELAY
+```
+...
+
+4. Je ping ma machine Server avec Client : `$ ping 10.2.0.10`
+J'affiche de nouveau la table ARP de ma machine Client :
+```
+$ ip neigh show
+10.1.0.1 dev enp0s3 lladdr 0a:00:27:00:00:01 REACHABLE
+10.1.0.254 dev enp0s3 lladdr 08:00:27:1e:71:a1 REACHABLE
+```
+...
+
+5. J'affiche de nouveau ma table ARP de ma machine Server :
+```
+$ ip neigh show
+10.2.0.1 dev enp0s3 lladdr 0a:00:27:00:00:02 REACHABLE
+10.2.0.254 dev enp0s3 lladdr 08:00:27:d7:a7:a0 STALE
+```
+...
+
+##### B. Manip 2
+1. Je revide les tables ARP de toutes mes machines : `$ sudo ip neigh flush all`
+2. J'affiche la table ARP de ma machine Router :
+```
+$ sudo ip neigh show
+10.2.0.1 dev enp0s8 lladdr 0a:00:27:00:00:02 REACHABLE
+```
+...
+
+3. Avec ma machine Client je ping ma machine Server :
+```
+$ ping 10.2.0.10
+PING 10.2.0.10 (10.2.0.10) 56(84) bytes of data.
+64 bytes from 10.2.0.10: icmp_seq=1 ttl=63 time=2.59 ms
+64 bytes from 10.2.0.10: icmp_seq=2 ttl=63 time=1.89 ms
+...
+```
+
+4. J'affiche de nouveau la table ARP de ma machine Router :
+```
+$ ip neigh show
+10.2.0.10 dev enp0s8 lladdr 08:00:27:1e:71:a1 REACHABLE
+10.1.0.10 dev enp0s3 lladdr 08:00:27:1e:71:a1 REACHABLE
+10.2.0.1 dev enp0s8 lladdr 0a:00:27:00:00:02 DELAY
+```
+##### C. Manip 3
+1. Je vide de nouveau les tables ARP de toutes mes machines : `sudo ip neigh flush all`
+2. J'affiche la table ARP de mon pc : `$ ip neigh show`
+Maintenant je l'efface : `$ sudo ip neigh flush all`
+Quand je l'affiche de nouveau :
+```
+ip neigh show
+192.168.1.55 dev wlp58s0 lladdr e0:51:63:c1:4f:16 REACHABLE
+```
+Après avoir attendu :
+```
+192.168.1.55 dev wlp58s0 lladdr e0:51:63:c1:4f:16 REACHABLE
+192.168.1.254 dev wlp58s0 lladdr 6c:38:a1:24:6a:94 REACHABLE
+```
+
+##### D. Manip 4
+1. 
