@@ -181,14 +181,20 @@ PING 10.2.0.10 (10.2.0.10) 56(84) bytes of data.
 rtt min/avg/max/mdev = 2.022/2.191/2.335/0.151 ms
 ```
 3. Sur ma machine Server, je quitte la capture Wireshark avec un `Ctrl-c`, puis je vérifie la présence du fichier avec `ls`.
-#Enfin, je l'envoie sur mon PC hôte :
+
 ```
 tcpdump: listening on enp0s3, link-type EN10MB (Ethernet), capture size 262144 bytes
 ^C22 packets captured
 24 packets received by filter
 0 packets dropped by kernel
 $ ls
-$ ping.pcap
+ping.pcap
+```
+Enfin, je l'envoie sur mon PC hôte :
+```
+$ sudo scp admin@10.2.0.254:/home/admin/ping.pcap ~/Bureau
+admin@10.2.0.254's password: 
+ping.pcap             100%   46KB  11.0MB/s   00:00  
 ```
 
 ##### B. Interception d'une communication netcat
@@ -205,5 +211,8 @@ ah oui t'as pas trop d'inspi toi
 dsl :/
 ```
 Enfin, depuis ma machine Router, j'envoie le fichier netcat_ok.pcap sur mon PC hôte :
-
-##### C. Interception d'une communication HTTP
+```
+$ sudo scp admin@10.2.0.254:/home/admin/netcat_ok.pcap ~/Bureau
+admin@10.2.0.254's password: 
+netcat_ok.pcap             100%   12KB  30.0MB/s   00:00  
+```
