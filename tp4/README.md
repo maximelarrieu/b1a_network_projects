@@ -197,6 +197,8 @@ admin@10.2.0.254's password:
 ping.pcap             100%   46KB  11.0MB/s   00:00  
 ```
 
+![screen ping.pacp sur Wireshark](pingpcapscreen.png)
+
 ##### B. Interception d'une communication netcat
 Premièrement, je vide les tables ARP de toutes mes machines :  `sudo ip neigh flush all`
 Maintenant, je lance Wireshark sur ma machine Router pour intercepter le trafic qui passe par l'interface que j'ai choisie et l'enregistre dans un fichier netcat_ok.pcap : `$ sudo tcpdump -i enp0s3 -w netcat_ok.pcap`
