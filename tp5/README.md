@@ -1,4 +1,3 @@
-# PROJET RESEAU - TP5
 ## Premier pas dans le monde Cisco
 
 ### I. Préparation du lab
@@ -22,5 +21,49 @@ Pour configurer les routeurs, il faut lancer la console de GNS3 en double-cliqua
 Nous avons un invité de commande afin de définir une IP statique aux ports de nos routeurs.
 ```
 # show ip int br
-
 ```
+
+### II. Lancement et configuration du lab
+...
+
+### III. DHCP
+#### 1. Mise en place du serveur DHCP
+##### 1. Renommer la machine
+`sudo hostname dhcp-net2.tp5.b1`
+##### 2. Installer le serveur DHCP
+On stop la machine dans GNS3.
+Dans Virtualbox -> `Configuration`, dans `Réseaux` on active la troisième interface en NAT.
+Puis on lance la machine.
+```
+$ ip a
+enp0s9 : 10.0.4.15/24
+```
+Et on installe notre serveur DHCP : 
+```
+$ sudo yum install -y dhcp
+...
+Installé :
+	dhcp.x86_64 12:4.2.5-68.el7.centos.1
+Terminé !
+```
+On éteint la machine.
+##### 3. Rallumez la VM dans GNS3
+Clic droit -> Start
+##### 4. Configuration du serveur DHCP
+Pour configurer le serveur DHCP, il nous faut modifier le fichier `dhcpd.conf` et le remplir par le modèle donné.
+##### 5. Démarrer le serveur DHCP
+On lance la commande `sudo systemctl start dhcpd`
+##### 6. Faire un test
+Dans la VM Client1, je modifie son interface en DHCP, en dynamique.
+ Comme d'habitude `$ sudo nano /etc/sysconfig/network-scripts/ifcfg-enp0s3`
+ On modifie la ligne `BOOTPROTO=` pour y ajouter `dhcp`.
+ Pour que les modifications soient prises en compte, on redémarre l'interface :
+```
+$ sudo ifdown enp0s3
+$ sudo ifup enp0s3  
+```
+Enfin, je peux utiliser `dhclient`.
+Tout d'abord je lâche le bail DHCP : `sudo dhclient -v -r`
+Puis je redemande une IP : `sudo dhclient -v`.
+
+#### 2. Explorer un peu DHCP
