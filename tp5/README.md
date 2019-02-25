@@ -57,6 +57,7 @@ On répète les mêmes procédures le router2.
 
 ##### Checklist routes
 + router1.tp5.b1
+
 Pour lui ajouter `net12` je procède de la manière suivante : 
 ```
 # conf t
@@ -64,6 +65,7 @@ Pour lui ajouter `net12` je procède de la manière suivante :
 (config)# exit
 ```
 + router2.tp5.b1
+
 Pour lui ajouter `net12` je procède de la manière suivante : 
 ```
 # conf t
@@ -71,16 +73,19 @@ Pour lui ajouter `net12` je procède de la manière suivante :
 (config)# exit
 ```
 + server1.tp5.b1
+
 Pour lui ajouter `net2`, je fais comme nous avions faire dans plusieurs tp précédents :
 ```
 sudo ip add 10.5.2.0/24 via 10.5.1.254 dev enp0s3
 ```
 + client1.tp5.b1
+
 Idem pour cette machine mais on ajoute `net1` :
 ```
 sudo ip add 10.5.1.0/24 via 10.5.2.254 dev enp0s3
 ```
 + client2.tp5.b1
+
 On fait la même chose pour cette dernière machine :
 ```
 sudo ip add 10.5.1.0/24 via 10.5.2.254 dev enp0s3
