@@ -29,8 +29,64 @@ Nous avons un invité de commande afin de définir une IP statique aux ports de 
 ```
 
 ### II. Lancement et configuration du lab
-...
 
+##### Checklist IP VM
++ Pour définir les IPs statiques de nos machines, il suffit d'aller modifier le fichier de la carte réseau comme nous avons l'habitude de faire. Pour le retrouver : `cd /etc/sysconfig/network-scripts`. On modifie alors le fichier de l'interface en rentrant l'IP souhaitée. 
+On suivra la même procédure pour chaque machine.
++ La connexion ssh est désormais effective.
++ Pour définir leur nom de domaine, on utilise : `sudo hostname server1.tp5.b1` par exemple.
+
+##### Checklist IP Routeurs
++ Pour définir l'IP statique de nos routeurs, il faut utiliser la console se trouvant en faisant un Clique-droit sur notre routeur et sélectionner `Console`. C'est ici que nous modifierons l'interface, il faut passer en monde configuration :
+```
+# conf t
+(config)# interface eth0/0
+(config-if)# ip address 10.5.1.254 255.255.0
+no shut
+# conf t
+(config)# interface eth0/1
+(config-if)# ip address 10.5.12.1 255.255.255.252
+no shut
+```
+On utilise `no shut` pour activer les changements.
++ Pour changer le nom de domaine, il nous faut passer en monde configuration pour utiliser la même commande que sur linux : 
+`sudo hostname router1.tp5.b1`
+
+Les exemples utilisés représentent la configuration de mon router1.
+On répète les mêmes procédures le router2.
+
+##### Checklist routes
++ router1.tp5.b1
+Pour lui ajouter `net12` je procède de la manière suivante : 
+```
+# conf t
+(config)# ip route 10.5.2.0 255.255.255.0 10.5.22.2
+(config)# exit
+```
++ router2.tp5.b1
+Pour lui ajouter `net12` je procède de la manière suivante : 
+```
+# conf t
+(config)# ip route 10.5.1.0 255.255.255.0 10.5.22.1
+(config)# exit
+```
++ server1.tp5.b1
+Pour lui ajouter `net2`, je fais comme nous avions faire dans plusieurs tp précédents :
+```
+sudo ip add 10.5.2.0/24 via 10.5.1.254 dev enp0s3
+```
++ client1.tp5.b1
+Idem pour cette machine mais on ajoute `net1` :
+```
+sudo ip add 10.5.1.0/24 via 10.5.2.254 dev enp0s3
+```
++ client2.tp5.b1
+On fait la même chose pour cette dernière machine :
+```
+sudo ip add 10.5.1.0/24 via 10.5.2.254 dev enp0s3
+```
+On peut maintenant relancer les interface avec `systemctl restart network`
+Et les machines peuvent se ping.
 ### III. DHCP
 
 #### 1. Mise en place du serveur DHCP
