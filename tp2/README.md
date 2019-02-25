@@ -1,4 +1,4 @@
-# PROJET RESEAU
+# PROJET RESEAU - TP2
 ## EXPLORATION DU RESEAU D'UN POINT DE VUE DU CLIENT
 ### Exploration locale en solo
 ---
