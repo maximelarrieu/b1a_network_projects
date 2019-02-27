@@ -74,10 +74,22 @@ R1(config)# router ospf 1
 ```
 R1(config-router)# network 10.6.100.0 0.0.0.3 area 0
 R1(config-router)# network 10.6.100.4 0.0.0.3 area 0
-R1(config-router)# network 10.6.202.0 0.0.0.3 area 2
+R1(config-router)# network 10.6.202.0 0.0.0.0 area 2
 ```
 ```
 R2(config-router)# network 10.6.100.0 0.0.0.3 area 0
-R2(config-router)# network 10.6.100.4 0.0.0.3 area 0
-R2(config-router)# network 10.6.202.0 0.0.0.3 area 2
+R2(config-router)# network 10.6.100.8 0.0.0.3 area 0
+```
+```
+R3(config-router)# network 10.6.100.8 0.0.0.3 area 0
+R3(config-router)# network 10.6.100.12 0.0.0.3 area 0
+R3(config-router)# network 10.6.101.0 0.0.0.3 area 1
+```
+```
+R4(config-router)# network 10.6.100.12 0.0.0.3 area 0
+R4(config-router)# network 10.6.100.4 0.0.0.3 area 0
+```
+```
+R5(config-router)# network 10.6.101.0 0.0.0.3 area 1
+R5(config-router)# network 10.6.201.0 0.0.0.3 area 1
 ```
