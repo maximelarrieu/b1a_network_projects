@@ -1,5 +1,6 @@
 # PROJET RESEAU - TP6
 ## Une topologie qui ressemble un peu à quelque chose, enfin ?
+### Lab2 : Un peu de complexité (et d'utilité ?...)
 ### I. Mise en place du lab
 #### Checklist IP Routeurs
 * Pour définir les IP statiques des routeurs, je procède comme nous l'avions pu faire précédemment. L'exemple utilisé représente la mise en place de mon `router1`. Elle sera la même pour tous les autres, les IPs à leur attribuer ne seront évidemment pas les même :
@@ -28,6 +29,9 @@ Ethernet0/1			10.6.100.5		Yes Manual up			up
 Ethernet0/2			10.6.201.254	Yes Manual up			up
 Ethernet0/3			unassigned		Yes Manual up			up
 ```
+Pour éviter de tout recommencer à chaque fois, je sauvegarde mes changements :
+`R1# copy runnning-config startup-config`
+
 * Pour définir leurs noms de domaine, j'utilise :
 ```
 R1# conf t
@@ -75,21 +79,71 @@ R1(config)# router ospf 1
 R1(config-router)# network 10.6.100.0 0.0.0.3 area 0
 R1(config-router)# network 10.6.100.4 0.0.0.3 area 0
 R1(config-router)# network 10.6.202.0 0.0.0.0 area 2
+R1(config-router)# exit
+R1(config)# exit
+R1# show ip protocols
+Routing Protocol is "ospf 1"
+...
+  Routing for Networks:
+  10.6.100.0 0.0.0.3 area 0
+  10.6.100.4 0.0.0.3 area 0
+  10.6.202.0 0.0.0.0 area 2
+...
 ```
 ```
 R2(config-router)# network 10.6.100.0 0.0.0.3 area 0
 R2(config-router)# network 10.6.100.8 0.0.0.3 area 0
+R2(config-router)# exit
+R2(config)# exit
+R2# show ip protocols
+Routing Protocol is "ospf 1"
+...
+  Routing for Networks:
+  10.6.100.0 0.0.0.3 area 0
+  10.6.100.8 0.0.0.3 area 0
+...
 ```
 ```
-R3(config-router)# network 10.6.100.8 0.0.0.3 area 0
 R3(config-router)# network 10.6.100.12 0.0.0.3 area 0
-R3(config-router)# network 10.6.101.0 0.0.0.3 area 1
+R3(config-router)# network 10.6.100.4 0.0.0.3 area 0
+R3(config-router)# exit
+R3(config)# exit
+R3# show ip
+Routing Protocol is "ospf 1"
+...
+  Routing for Networks:
+  10.6.100.4 0.0.0.3 area 0
+  10.6.100.12 0.0.0.3 area 0
+...
 ```
 ```
+R4(config-router)# network 10.6.100.8 0.0.0.3 area 0
 R4(config-router)# network 10.6.100.12 0.0.0.3 area 0
-R4(config-router)# network 10.6.100.4 0.0.0.3 area 0
+R4(config-router)# network 10.6.101.0 0.0.0.3 area 1
+R4(config-router)# exit
+R4(config)# exit
+R4# show ip protocols
+Routing Protocol is "ospf 1"
+...
+  Routing for Networks:
+  10.6.100.8 0.0.0.3 area 0
+  10.6.100.12 0.0.0.3 area 0
+  10.6.101.0 0.0.0.0 area 1
+...
 ```
 ```
 R5(config-router)# network 10.6.101.0 0.0.0.3 area 1
 R5(config-router)# network 10.6.201.0 0.0.0.3 area 1
+R5(config-router)# exit
+R5(config)# exit
+R5# show ip protocolsRouting Protocol is "ospf 1"
+...
+  Routing for Networks:
+  10.6.101.0 0.0.0.3 area 1
+  10.6.201.1 0.0.0.3 area 1
+...
 ```
+
+### Lab3 : Let's end this properly
+### I. NAT : accès internet
+Tout d'abord, je télécharge la VM GNS3.
